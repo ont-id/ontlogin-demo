@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>html demo</title>
+</head>
+<body>
+<button onclick="login()">sign in with ONT LOGIN</button>
+<script src="ontlogin.min.js"></script>
+<script>
+    function showQr(text) {
+        console.log("show qr code of", text);
+    }
+
+    async function login() {
+        const authRequest = ontlogin.createAuthRequest(0);
+        const authChallenge = await ontlogin.postRequest(
+            "server-url/challenge",
+            authRequest
+        );
+        const {text, id} = await ontlogin.requestQR(authChallenge);
+        showQr(text);
+        const challengeResponse = await ontlogin.queryQRResult(id);
+        const result = await ontlogin.postRequest(
+            "server-url/response",
+            challengeResponse
+        );
+        console.log(result);
+    }
+</script>
+</body>
+</html>
