@@ -1,6 +1,7 @@
 package io.ont.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.ontio.modules.ClientHello;
 import com.github.ontio.modules.ClientResponse;
 import com.github.ontio.modules.ServerHello;
 import io.ont.service.LoginService;
@@ -20,8 +21,8 @@ public class LoginServiceImpl implements LoginService {
     private SDKUtil sdkUtil;
 
     @Override
-    public ServerHello generateChallenge(String action, JSONObject serverHello) throws Exception {
-        return sdkUtil.generateChallenge();
+    public ServerHello generateChallenge(String action, ClientHello clientHello) throws Exception {
+        return sdkUtil.generateChallenge(clientHello);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void checkJwt(String action, String token) throws Exception {
+    public void checkJwt(String action, String token) {
         jwtUtils.verifyAccessToken(token);
     }
 

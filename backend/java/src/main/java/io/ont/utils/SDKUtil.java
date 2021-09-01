@@ -28,11 +28,11 @@ public class SDKUtil {
             synchronized (OntLoginSdk.class) {
                 if (sdk == null) {
                     ServerInfo serverInfo = new ServerInfo();
-                    serverInfo.setName("testServer");
+                    serverInfo.setName("testServcer");
                     serverInfo.setIcon("http://somepic.jpg");
                     serverInfo.setUrl("https://ont.io");
-                    serverInfo.setDid("did:ont:AxxTest");
-                    serverInfo.setVerificationMethod("did:ont:AxxTest");
+                    serverInfo.setDid("did:ont:sampletest");
+                    serverInfo.setVerificationMethod("");
 
                     SDKConfig sdkConfig = new SDKConfig();
                     sdkConfig.setChain(new String[]{"ont"});
@@ -68,12 +68,7 @@ public class SDKUtil {
         return sdk;
     }
 
-    public ServerHello generateChallenge() throws Exception {
-        ClientHello clientHello = new ClientHello();
-        clientHello.setVer("1.0");
-        clientHello.setType("ClientHello");
-        clientHello.setAction(1);
-        clientHello.setClientChallenge(new ClientChallenge());
+    public ServerHello generateChallenge(ClientHello clientHello) throws Exception {
         OntLoginSdk ontLoginSdk = getOntLoginSdk();
         ServerHello serverHello = ontLoginSdk.generateChallenge(clientHello);
         return serverHello;

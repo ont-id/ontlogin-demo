@@ -1,6 +1,7 @@
 package io.ont.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.ontio.modules.ClientHello;
 import com.github.ontio.modules.ClientResponse;
 import com.github.ontio.modules.ServerHello;
 import io.ont.bean.Result;
@@ -18,9 +19,9 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/challenge")
-    public Result generateChallenge(@RequestBody JSONObject serverHello) throws Exception {
+    public Result generateChallenge(@RequestBody ClientHello clientHello) throws Exception {
         String action = "generateChallenge";
-        ServerHello result = loginService.generateChallenge(action, serverHello);
+        ServerHello result = loginService.generateChallenge(action, clientHello);
         return new Result(action, ErrorInfo.SUCCESS.code(), ErrorInfo.SUCCESS.descEN(), result);
     }
 
@@ -32,7 +33,7 @@ public class LoginController {
     }
 
     @PostMapping("/check-jwt")
-    public Result checkJwt(@RequestBody JSONObject req) throws Exception {
+    public Result checkJwt(@RequestBody JSONObject req) {
         String action = "checkJwt";
         String token = req.getString("token");
         loginService.checkJwt(action, token);
